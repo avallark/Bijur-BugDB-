@@ -52,29 +52,7 @@ def getBugList(conn, user):
     bugList = [dict(bug_id = row[0], title= row[1], assigned_to = row[2], priority = row[3], customer = row[4], status = row[5]) for row in result ]
     return bugList
 
-    
-def setSession(conn ,ipaddr, email_id):
-    m_debug(conn, 'IP : '+ipaddr)
-    gi = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
-    country = gi.country_code_by_addr(ipaddr) or 'IN'
-    m_debug(conn,'Country : '+country)
-    uniqueID = str(int(random.random()*10000000))
-    query = """insert into sessions (session_number, ipaddr, country, user_email_id) values ('"""+ uniqueID +"""','"""+ipaddr +"""','""" +country +"""','""" +email_id+"""');"""
 
-    #m_debug(conn, "*** Inserting : " + query)
-
-    result=runSql(query, conn)
-
-    return uniqueID
-    
-
-def getSessionEmail(conn,uniqueID):
-    query = """select user_email_id, last_updated_time from sessions where session_number = '"""+uniqueID+"""' order by last_updated_time desc limit 1"""
-    result = runSql(query, conn)
-    if len(result) <> 0:
-        return result[0][0]
-    else:
-        return False
 
 def createUser(conn, email_id, password):
     """ This adds a new user from the email_id """
@@ -113,25 +91,6 @@ def getUserID(conn, user_id):
         entries = False
         
     return entries
-
-
-def getEmailDetails(conn, meeting_id):
-
-    query = """select c.smtp_server, c.smtp_port, c.smtp_user, c.smtp_pass from company c, users u, meetings m where m.meeting_id = """+meeting_id+""" and m.user_id = u.user_id and u.company_id = c.company_id"""
-
-    result = runSql(query)
-    entries = [dict(smtp_server=row[0], smtp_port=row[1], smtp_user=row[2],smtp_pass=row[3]) for row in result]
-
-    return entries
-
-
-def getAttendeesList(conn, meeting_id):
-
-    query = """select user_id from meeting_attendees where meeting_id ="""+meeting_id+""" and owner_flag = 'N' """
-
-    result = runSql(query)
-    
-    return result
 
 
 
