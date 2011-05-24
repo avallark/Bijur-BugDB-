@@ -1,8 +1,10 @@
 *** Bijur BUGDB ***
 
-License - GPL v2 : http://www.gnu.org/licenses/gpl-2.0.html
+** License ** 
 
-Requirements 
+GPL v2 : http://www.gnu.org/licenses/gpl-2.0.html
+
+** Requirements ** 
 
 Flask : http://flask.pocoo.org/
 
@@ -10,10 +12,16 @@ Python 2.7 (Am pretty sure it works on 2.5+)
 
 MySQL server 5.3+
 
-Python Module requirements:
+** Python Module requirements: **
 
-* MySQLdb
+MySQLdb
 
+
+** How to install and run **
+
+First edit the db.py file to include your mysql database, user and password
+Then run the below from a shell
+$ python tasks.py
 
 ** ChangeLog **
 

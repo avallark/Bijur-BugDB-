@@ -1,9 +1,13 @@
 import MySQLdb as mysql
 import random, re
 
+MYSQLUSER = <Enter your MySQL User here>
+MYSQLDB = <Your MySQL DB Name>
+PASSWORD = <Your MySQL DB password for the above user>
+
 def connectDB():
 
-    conn = mysql.connect (host = 'localhost', user = 'tasks', passwd = 'tasks81',db = 'tasksdb')
+    conn = mysql.connect (host = 'localhost', user = MYSQLUSER, passwd = PASSWORD ,db = MYSQLDB)
     
     return conn
 
