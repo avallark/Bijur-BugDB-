@@ -1,0 +1,22 @@
+*** Bijur BUGDB ***
+
+License - GPL v2 : http://www.gnu.org/licenses/gpl-2.0.html
+
+Requirements 
+
+Flask : http://flask.pocoo.org/
+
+Python 2.7 (Am pretty sure it works on 2.5+)
+
+MySQL server 5.3+
+
+Python Module requirements:
+
+* MySQLdb
+
+
+h2. ChangeLog
+
+25-03-2011
+
+First Commit to Git. Also cleaned up the code a little bit.
