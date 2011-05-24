@@ -1,0 +1,231 @@
+body{
+	font-family: "Lucida Grande", Helvetica;
+	align:center;
+    width: 600px:
+}
+pre{
+	font-family: "Lucida Grande", Helvetica;
+}	
+#userInput{
+	font-size: 150%
+}
+img{
+	border-top: 30px;
+}
+
+.generateReport{
+    
+    width = 100em;
+    
+}
+
+.bodyblock{
+    left: 20px;
+    width:90%;
+    align: center;
+
+}
+
+table.bugQueue {
+	border-width: 0px;
+	padding: 8px;
+    border-spacing: 1px;
+	border-style: dotted;
+	border-color: gray;
+	border-collapse: collapse;
+    -moz-border-radius: 5px;
+    width: 90%;
+}
+table.bugQueue th {
+	border-width: 0px;
+	border-style: dotted;
+    padding: 8px;
+	border-color: gray;
+	background-color: #ccc;
+    text-align: left;
+}
+table.bugQueue td {
+	border-width: 0px;
+    padding: 8px;
+	border-style: dotted;
+	border-color: gray;
+	background-color: #fffff0;
+	-moz-border-radius: ;
+}
+
+.options{
+    margin-top:40px;
+}
+
+.align-right{
+    position: absolute;
+    left : 43em;
+}
+
+.heading{
+/*    margin-top: 5px;
+    margin-left: 5px;*/
+    margin: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-color: red;
+    background: brown;
+    color:white;
+	-moz-border-radius: 5px;
+}
+
+.bodyblock {
+	font-family: "Lucida Grande", Helvetica;
+	margin: 60px;
+	right:auto;
+	left:auto;
+	align:center;
+    width: 600px:
+}
+
+.bodymid{
+
+    margin: auto;
+    width: 70%;
+    align: center;
+    margin-top: 60px;
+}
+
+.bodymidwinner{
+
+    margin: auto;
+    width: 70%;
+    align: center;
+    margin-top: 60px;
+    display: none;
+}
+
+.bodymidcounter{
+
+    margin: auto;
+    width: 70%;
+    align: center;
+    margin-top: 60px;
+    font-size: 200px;
+}
+
+.curved-box
+    {
+    margin: 10px;
+    background-color: #c3d0d4;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.curved-box em
+    {
+    color: #f4fbfd;
+}
+
+.input input
+{
+    font-color: #939393;
+}
+#input {
+    font-color: #939393;
+    align: right;
+    valign: top:
+}
+
+.curved-box h4
+    {
+    color: #f4fbfd;
+    padding:5px 15px 10px 15px;
+}
+
+.curved-box p
+    {
+    margin: 0px;
+    padding: 5px 15px 10px 15px;
+    text-align: left;
+    font-size : 100%
+}
+
+
+div#counting {
+    left: auto;
+	right: auto;
+    
+}
+
+.bottom-right{
+    position:absolute;
+    bottom:10px;
+    right:20px;
+    font-size: 125%;
+}
+
+.top-right{
+    position:absolute;
+    top:15px;
+    right:25px;
+}
+
+.totals{
+    border-top: 1px;
+    font-color: red;
+}
+.small-text{
+    font-size: 50%;
+}
+
+.submit{
+    position: absolute;
+    padding-left: 40px;
+    
+}
+
+a.button0{
+    font-color: red;
+}
+
+.leftie{
+    right: 5px;
+}
+
+.superman{
+    display: block;
+    width: 100px;
+    height: 20px;
+    padding: 15px 20px 10px 45px;
+    color:#666666;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.right-nav{
+    color: brown;
+    position:absolute;
+    right:15px;
+    top: 150px;
+    width: 300px;
+    font-size: 125%;
+    display: none;
+}
+
+ul.right-nav-list{
+    list-style-type: none;
+    padding-left: 15px;
+    padding-bottom: 20px;
+}
+
+a{
+    text-decoration:none;
+    color: #ccc
+}
+a:hover{
+    text-decoration:none;
+    color: #000
+}
+
+h4.nav-title{
+    padding-left: 5px;
+}

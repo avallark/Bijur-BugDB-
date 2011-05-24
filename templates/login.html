@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Login Here</h3>
+<div class=errorMessages>
+<p>{{ error }}</p>
+<form name="loginform" method=POST>
+  <p>Email<input type=text name=email_id /></p>
+  <p>Password<input type=password name=password /></p>
+  <input type=submit>
+</form>  
+{% endblock %}

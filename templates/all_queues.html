@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>All Bug Queue</h3>
+
+<div class=selectUser>
+
+  <form name=selectUser method=POST>
+
+    <!-- <input type=text size=30 name=other_username value="{{ other_username }}"> -->
+
+    <select name="other_username">
+      <option value = "all"> All </option>
+      {% for i in users %}
+        {% if i['username'] == session['username'] %}
+            <option value="{{i['username']}}" selected='selected' >{{i['username']}}</option>
+        {% else %}
+            <option value="{{i['username']}}" >{{ i['username'] }}</option>
+        {% endif %}
+      {% endfor %}
+
+
+    </select>
+    <input type=submit value="See Queue">
+
+  </form>
+
+</div>
+
+<div class=options>
+  <a href="addBug" class="button button-gray">Create New Bug</a>
+  <a href="queue" class="button button-gray">Refresh Queue</a>
+</div>
+
+{% for summary in all_queues %}
+
+<div class=bugQueue>
+  <hr/>
+  <h4>{{ summary['username'] }}</h4>
+  <table class=bugQueue>
+    <tr>
+      <th> Customer </th>
+      <th> Title </th>
+      <th> Priority </th>
+      <th> Status </th>
+    </tr>
+
+    {% for d in summary['queue'] %}
+
+    <tr>
+      <td> {{ d['customer'] }} </td>
+      <td> <a href="/bug?bug_id={{ d['bug_id'] }}"> {{ d['title'] }} </a></td>
+      <td> {{ d['priority'] }} </td>
+      <td> {{ d['status'] }} </td> 
+    </tr>
+
+
+    {% endfor %}
+
+  </table>
+</div>
+{% endfor %}
+
+{% endblock %}
+

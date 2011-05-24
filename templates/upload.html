@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+<form action="" method=post enctype=multipart/form-data>
+  <h4> Upload the file </h4>
+  <br />
+  <input type=file name=file><br />
+  <input type=submit value=Upload><br />
+</form>
+    <br /><br />
+<p>Note: The file should be .csv separated by ';'. The file must have the following columns in the exact same order Name, Email</p>
+{% endblock %}

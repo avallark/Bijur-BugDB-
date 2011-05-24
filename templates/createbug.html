@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Create a Bug for {{ session['username'] }}</h3>
+<br/>
+<form name=createBug method=POST>
+
+  <table class=tableinput>
+    <tr>
+      <td>Bug Title</td> <td><input type=text size=80 name=title></td>
+    </tr>
+    <tr>
+      <td>Priority</td><td> 
+        <select name="priority" >
+          <option value="1"> 1</option>
+          <option value="2" selected='selected'> 2</option>
+          <option value="3"> 3</option>
+          <option value="4"> 4</option>
+      </select></td>
+    </tr>
+    <tr>
+      <td>Customer</td> <td><input type=text size=20 name=customer></td>
+    </tr>
+    <tr>
+      <td>Bug Description</td><td><textarea name=description rows=10 cols=80 ></textarea></td>
+    </tr>
+    <tr>
+      <input type=hidden name=assigned_to_username value="{{ session['username'] }}" >
+      <td>&nbsp;</td><td><input type=submit class="button button-gray" value="Create this Bug"></td>
+    </tr>
+  </table>
+</form>
+
+{% endblock %}
+

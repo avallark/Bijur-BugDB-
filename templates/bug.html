@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Bug Details</h3>
+<br/>
+<form name=BugDetails method=POST>
+<!-- First the Table of the bug header -->
+  <table class=tableinput>
+    <tr>
+      <td>Bug Title</td> <td><input type=text size=80 name=title value="{{ bugh['title'] }}"></td>
+    </tr>
+    <tr>
+      <td>Status</td><td> 
+        <select name="status" >
+          {% for i in all_status %}
+            {% if bugh['status'] == i['status'] %}
+            <option value="{{ i['status'] }}" selected='selected'> {{ i['status'] }} </option>
+            {% else %}
+            <option value="{{ i['status'] }}" > {{ i['status'] }} </option> 
+            {% endif %}
+          {% endfor %}
+      </select></td>
+    </tr>
+    <tr>
+      
+      <td>Assigned to</td><td> 
+        <select name="assigned_to_username" >
+          {% for i in all_users %}
+            {% if bugh['assigned_to_username'] == i['username'] %}
+            <option value="{{ i['username'] }}" selected='selected'> {{ i['username'] }} </option>
+            {% else %}
+            <option value="{{ i['username'] }}" > {{ i['username'] }} </option> 
+            {% endif %}
+          {% endfor %}
+      </select></td>
+
+    </tr>
+    <tr>
+      <td>Priority</td><td> 
+        <select name="priority" >
+          {% if bugh['priority'] == 1 %}
+          <option value="1" selected='selected'> 1</option>
+          {% else %}
+          <option value="1" > 1</option>
+          {% endif %}
+
+          {% if bugh['priority'] == 2 %}
+          <option value="2" selected='selected'> 2</option>
+          {% else %}
+          <option value="2" > 2</option>
+          {% endif %}
+
+          {% if bugh['priority'] == 3 %}
+          <option value="3" selected='selected'> 3</option>
+          {% else %}
+          <option value="3" > 3</option>
+          {% endif %}
+
+          {% if bugh['priority'] == 4 %}
+          <option value="4" selected='selected'> 4</option>
+          {% else %}
+          <option value="4" > 4</option>
+          {% endif %}
+
+      </select></td>
+    </tr>
+    <tr>
+      <td>Customer</td> <td><input type=text size=20 name=customer value="{{ bugh['customer'] }}"></td>
+      
+    </tr>
+    <tr>
+      <td>Bug Description</td><td><textarea name=description rows=10 cols=80 >{{ bugh['description'] }}</textarea></td>
+    </tr>
+  </table>
+<!-- Now the table for the updates -->
+<h4>Updates </h4>
+
+  {% for update in bugb %}
+<table class=bugQueue>
+  <tr>
+    <th>Updated by : {{ update['updated_by_username'] }}</th>
+  </tr>
+  <tr>
+    <td> {{ update['update'] }}</td>
+  </tr>
+</table>
+  {% endfor %}
+<table>
+  <tr>
+    <td><input type=hidden name="updated_by_username" value = "{{ session['username'] }}"></td>
+  </tr>
+  <tr>
+    <td><textarea name=newupdate rows=7 cols=80></textarea></td>
+  </tr>
+</table>
+
+<!-- Finally the submit button -->
+  <input type=submit class="button button-gray" value="Update this Bug">
+</form>
+
+{% endblock %}
+

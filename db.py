@@ -1,0 +1,223 @@
+import MySQLdb as mysql
+import random, re
+
+def connectDB():
+
+    conn = mysql.connect (host = 'localhost', user = 'tasks', passwd = 'tasks81',db = 'tasksdb')
+    
+    return conn
+
+
+def runSql(query, conn):
+    cursor = conn.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+#this loginPage call is just a demo of how to use the above to functions.
+
+def loginPage(conn, username,  password):
+    
+    query = """select password from  users where user_name = '"""+username+"""'
+            and password = md5('"""+password+"""');"""
+    result = runSql(query,conn)
+    
+    if len(result) <> 0:
+        return True
+    else:
+        return False
+
+# The debug procedures
+
+def m_debug(conn, text):
+    query = """insert into m_debug (text) values ('"""+text+"""');"""
+    result = runSql(query, conn)
+
+def getDebug(conn):
+    query = """select text from m_debug;"""
+    result = runSql(query, conn)
+    debug_log = [row[0] for row in result]
+    return debug_log
+
+def flushDebug(conn):
+    query = """delete from m_debug;"""
+    result = runSql(query,conn)
+
+
+# Now the application procedures.
+
+def getBugList(conn, user):
+    query = """select bh.bug_id, bh.bug_title, u.user_name, bh.priority, bh.customer, bh.status from bug_header bh, users u where u.user_id = bh.assigned_to_user_id and u.user_name = '"""+user+"""' order by bh.priority, bh.bug_id, bh.status;"""
+    result = runSql(query, conn)
+    bugList = [dict(bug_id = row[0], title= row[1], assigned_to = row[2], priority = row[3], customer = row[4], status = row[5]) for row in result ]
+    return bugList
+
+    
+def setSession(conn ,ipaddr, email_id):
+    m_debug(conn, 'IP : '+ipaddr)
+    gi = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
+    country = gi.country_code_by_addr(ipaddr) or 'IN'
+    m_debug(conn,'Country : '+country)
+    uniqueID = str(int(random.random()*10000000))
+    query = """insert into sessions (session_number, ipaddr, country, user_email_id) values ('"""+ uniqueID +"""','"""+ipaddr +"""','""" +country +"""','""" +email_id+"""');"""
+
+    #m_debug(conn, "*** Inserting : " + query)
+
+    result=runSql(query, conn)
+
+    return uniqueID
+    
+
+def getSessionEmail(conn,uniqueID):
+    query = """select user_email_id, last_updated_time from sessions where session_number = '"""+uniqueID+"""' order by last_updated_time desc limit 1"""
+    result = runSql(query, conn)
+    if len(result) <> 0:
+        return result[0][0]
+    else:
+        return False
+
+def createUser(conn, email_id, password):
+    """ This adds a new user from the email_id """
+    username = email_id.replace('@iese.edu', '')
+    query = """insert into users (email_id, password, user_name, status) values ('"""+email_id+"""',md5('"""+password+"""'), '"""+username+"""','A')"""
+    result = runSql(query,conn)
+
+    
+def getUser(conn, username):
+    """ This will return the user dictionary"""
+    m_debug(conn, 'Entering getUser to get user details for the username : '+username)
+    query = """select u.user_id, u.user_name, u.status, u.email_id from users u where u.user_name = '"""+username+"""';"""
+    
+    result = runSql(query, conn)
+    
+    if len(result) <> 0:
+        entries = [dict(user_id = row[0], username=row[1], status=row[2], email_id=row[3]) for row in result]
+        entries = entries[0]
+        m_debug(conn, 'Entry found in getUser for the username :'+entries['username'])
+    else:
+        entries = False
+        
+    return entries
+
+
+def getUserID(conn, user_id):
+    """ This will return the user dictionary"""
+    
+    query = """select u.user_id, u.user_first_name, u.user_last_name, u.cost, u.status,u.email_id,c.company_id, c.company_name, c.default_currency as currency from users u, company c where u.user_id = '"""+user_id+"""' and u.company_id = c.company_id"""
+    
+    result = runSql(query, conn)
+    
+    if len(result) <> 0:
+        entries = [dict(user_id = row[0], user_first_name=row[1], user_last_name=row[2], email_id=row[5], company_id=row[6], cost=row[3], company_name=row[7]) for row in result]
+    else:
+        entries = False
+        
+    return entries
+
+
+def getEmailDetails(conn, meeting_id):
+
+    query = """select c.smtp_server, c.smtp_port, c.smtp_user, c.smtp_pass from company c, users u, meetings m where m.meeting_id = """+meeting_id+""" and m.user_id = u.user_id and u.company_id = c.company_id"""
+
+    result = runSql(query)
+    entries = [dict(smtp_server=row[0], smtp_port=row[1], smtp_user=row[2],smtp_pass=row[3]) for row in result]
+
+    return entries
+
+
+def getAttendeesList(conn, meeting_id):
+
+    query = """select user_id from meeting_attendees where meeting_id ="""+meeting_id+""" and owner_flag = 'N' """
+
+    result = runSql(query)
+    
+    return result
+
+
+
+
+# for bugs
+
+def createBug(conn, title, description, username, priority, customer):
+    m_debug(conn, 'Inside db.createBug')
+    user = getUser(username)
+    user_id = user['user_id']
+    query = """insert into bug_header (bug_title, bug_description, assigned_to_user_id, priority, customer) values ( '"""+title+"""','"""+description+"""',str("""+user_id+"""),str("""+priority+"""), '"""+customer+"""');"""
+    result =runSql(query,conn)
+
+    
+ 
+def createBug2(conn, bug):
+    user_id = str(bug['user_id'])
+    m_debug(conn, str(user_id))
+    query = """insert into bug_header ( bug_title, bug_description, assigned_to_user_id, priority, customer, status) values ( '"""+bug['title']+"""','"""+bug['description']+"""',"""+user_id+""","""+bug['priority']+""", '"""+bug['customer']+"""','OPEN');"""
+    result =runSql(query,conn)
+    
+def getBugHeader(conn, bug_id):
+    query = """select b.bug_id, b.bug_title, b.bug_description, b.assigned_to_user_id, b.customer, b.status, u.user_name, b.priority from bug_header b, users u where b.assigned_to_user_id = u.user_id and bug_id = """+str(bug_id)
+    r = runSql(query,conn)[0]
+    bugh = dict(bug_id = r[0], title= r[1], description = r[2], assigned_to_user_id= r[3], customer = r[4], status = r[5], assigned_to_username = r[6], priority = r[7])
+    return bugh
+
+def getBugBody(conn, bug_id):
+    query = """select b.bug_update, b.last_updated_time, b.updated_by, u.user_name from bug_body b, users u where u.user_id = b.updated_by and b.bug_id = """+str(bug_id)+""" order by last_updated_time;"""
+    result = runSql(query, conn)
+    bugb = [dict(update = row[0], updated_by = row[1], updated_by_username = row[3]) for row in result]
+    return bugb
+
+
+def updateBugHeader(conn, bug):
+
+    query = """update bug_header set bug_title = '"""+bug['title']+ \
+        """', bug_description = '"""+bug['description']+ \
+        """', assigned_to_user_id = """+str(bug['assigned_to_user_id'])+""", customer = '""" \
+        + bug['customer']+"""', status = '"""+bug['status']+ \
+        """', priority = """+str(bug['priority'])+""" where bug_id = """+ str(bug['bug_id'])
+
+    result = runSql(query, conn)
+    
+
+def insertBugUpdate(conn, bug):
+
+    query = """ insert into bug_body (bug_id, bug_update, updated_by) values ("""+str(bug['bug_id'])+""", '"""+bug['update']+"""', """+str(bug['updated_by_user_id'])+""");"""
+
+    result = runSql(query, conn)
+    
+def getUserName(conn, user_id):
+
+    query = """select user_name from users where user_id = """+str(user_id)
+    result = runSql(query,conn)[0]
+
+    return result
+
+
+def getUsers(conn):
+
+    query = """select user_name,user_id from users where status = 'A';"""
+    result = runSql(query,conn)
+
+    users = [dict(user_id = row[1], username= row[0]) for row in result]
+    
+    return users
+    
+
+def getStatuses(conn):
+
+    query = """select status, status_description from all_status;"""
+    result = runSql(query,conn)
+    all_status = [dict(status = row[0], status_description= row[1]) for row in result]
+    
+    return all_status
+    
+
+def getAllQueues(conn):
+
+    all_users = getUsers(conn)
+    all_queues = []
+    
+    for user in all_users:
+        queue = getBugList(conn, user['username'])
+        summary = dict(username = user['username'], queue = queue)
+        all_queues.append(summary)
+
+    return all_queues
