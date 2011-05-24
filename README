@@ -2,7 +2,7 @@
 
 ** License ** 
 
-GPL v2 : http://www.gnu.org/licenses/gpl-2.0.html
+GPL v3 : refer to gpl.txt
 
 ** Requirements ** 
 
@@ -22,6 +22,14 @@ MySQLdb
 First edit the db.py file to include your mysql database, user and password
 Then run the below from a shell
 $ python tasks.py
+
+
+** TODO **
+
+Todo is a list of things I hope to add in the next release and does not really include the complete to-do list
+
+1. Report to show how many bugs were logged, solved in the past one week, month.
+
 
 ** ChangeLog **
 
