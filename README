@@ -19,6 +19,12 @@ MySQLdb (http://sourceforge.net/projects/mysql-python/)
 
 ** How to install and run **
 
+Connect to DB on mysql and create the schema using the file schema.sql:
+
+mysql --user=<MYSQLUSERNAME> -p -D >MYSQLDATABASENAME> < schema.sql
+
+You can make changes to schema.sql but only for the STATUSes in the insert statements.
+
 First edit the db.py file to include your mysql database, user and password
 Then run the below from a shell
 $ python tasks.py
@@ -28,8 +34,9 @@ $ python tasks.py
 
 Todo is a list of things I hope to add in the next release and does not really include the complete to-do list
 
-1. Archive bugs.
-2. Report to show how many bugs were logged, solved in the past one week, month.
+1. Categories and subcategories of bugs.
+2. Archive bugs.
+3. Report to show how many bugs were logged, solved in the past one week, month.
 
 
 ** ChangeLog **
