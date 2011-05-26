@@ -14,7 +14,7 @@ MySQL server 5.3+
 
 ** Python Module requirements: **
 
-MySQLdb
+MySQLdb (http://sourceforge.net/projects/mysql-python/)
 
 
 ** How to install and run **
@@ -28,7 +28,8 @@ $ python tasks.py
 
 Todo is a list of things I hope to add in the next release and does not really include the complete to-do list
 
-1. Report to show how many bugs were logged, solved in the past one week, month.
+1. Archive bugs.
+2. Report to show how many bugs were logged, solved in the past one week, month.
 
 
 ** ChangeLog **

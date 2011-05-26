@@ -15,13 +15,13 @@ import db
 
 # configuration
 
-UPLOAD_FOLDER = '/tmp'
-ALLOWED_EXTENSIONS = set(['csv'])
-
 DEBUG = True
 SECRET_KEY = 'i\xa5\xdb\x00\x031o\x88)\x9dMW<\xceq\x0c\xb6\xff5\xcdO%\xcch'
 
+DEV = "Development"
+PROD = "Production"
 
+ENVIR = DEV
 
 
 # thats it, now lets do our app
@@ -100,13 +100,13 @@ def queue():
         if request.method <> 'POST':
             debug('Getting bugList for user : '+session['username'])
             bugList = db.getBugList(g.db, session['username'])
-            return render_template('queue.html', bugs = bugList, other_username = session['username'], users= users)
+            return render_template('queue.html', bugs = bugList, other_username = session['username'], users= users, queue_user = session['username'])
         else:
-            debug('queue() in POST')
+            
             if request.form['other_username'] <> 'all':
                 debug('Getting bugList for user : '+request.form['other_username'])
                 bugList = db.getBugList(g.db, request.form['other_username'])
-                return render_template('queue.html', bugs = bugList, other_username = request.form['other_username'], users = users)
+                return render_template('queue.html', bugs = bugList, other_username = request.form['other_username'], users = users, queue_user = request.form['other_username'])
             else:
                 debug('Getting all queues')
                 #get a visible drop down of all users.
@@ -181,6 +181,9 @@ def bug():
         if bugh['assigned_to_user_id'] <> bug['assigned_to_user_id']:
             changedString += "** Changed Assigned from "+ bugh['assigned_to_username'] + " to "+ request.form['assigned_to_username'] + "\n"
 
+        if bugh['description'] <> bug['description']:
+            changedString += "** Changed Bug Description from " + "\n" + bugh['description'] 
+
         if bugh['customer'] <> bug['customer']:
             changedString += "** Changed Customer from "+bugh['customer']+" to "+ bug['customer'] + "\n"
 
@@ -231,6 +234,9 @@ def flushDebug():
 
         
 if __name__ == '__main__':
- #   app.run(host='0.0.0.0')
-     app.run(port=4000)
+    if ENVIR <> DEV:
+        app.run(host='0.0.0.0', port=4000)
+    else:
+        #DEBUG = False
+        app.run(port=4000)
 

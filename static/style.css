@@ -28,7 +28,6 @@ img{
 
 table.bugQueue {
 	border-width: 0px;
-	padding: 8px;
     border-spacing: 1px;
 	border-style: dotted;
 	border-color: gray;
@@ -46,7 +45,7 @@ table.bugQueue th {
 }
 table.bugQueue td {
 	border-width: 0px;
-    padding: 8px;
+    padding-left: 8px;
 	border-style: dotted;
 	border-color: gray;
 	background-color: #fffff0;
@@ -228,4 +227,9 @@ a:hover{
 
 h4.nav-title{
     padding-left: 5px;
+}
+
+pre {
+
+    white-space: pre-wrap
 }

@@ -1,9 +1,9 @@
 import MySQLdb as mysql
 import random, re
 
-MYSQLUSER = <Enter your MySQL User here>
-MYSQLDB = <Your MySQL DB Name>
-PASSWORD = <Your MySQL DB password for the above user>
+MYSQLUSER = 'tasks'
+MYSQLDB = 'tasksdb'
+PASSWORD = 'tasks81'
 
 def connectDB():
 
@@ -142,6 +142,8 @@ def updateBugHeader(conn, bug):
 
 def insertBugUpdate(conn, bug):
 
+    bug['update'] = bug['update'].replace("'","\\'")
+    
     query = """ insert into bug_body (bug_id, bug_update, updated_by) values ("""+str(bug['bug_id'])+""", '"""+bug['update']+"""', """+str(bug['updated_by_user_id'])+""");"""
 
     result = runSql(query, conn)
