@@ -1,9 +1,9 @@
 import MySQLdb as mysql
 import random, re
 
-MYSQLUSER = 'tasks'
-MYSQLDB = 'tasksdb'
-PASSWORD = 'tasks81'
+MYSQLUSER = <MYSQLUSERNAME>
+MYSQLDB = <MYSQLDATABASENAME>
+PASSWORD = <MYSQLUSERPASSWORD>
 
 def connectDB():
 
