@@ -54,6 +54,7 @@ create table all_status(
    primary key (status)
 );
 
+ -- Setting some default statuses, you can edit them from /status while running the app.                
 insert into all_status values ('OPEN','The bug is open and pending resolution from developer');
 insert into all_status values ('WAIT','The bug is open and awaiting response from user');
 insert into all_status values ('CLOSED','The bug has been closed');

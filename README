@@ -25,7 +25,8 @@ mysql --user=<MYSQLUSERNAME> -p -D >MYSQLDATABASENAME> < schema.sql
 
 You can make changes to schema.sql but only for the STATUSes in the insert statements.
 
-First edit the db.py file to include your mysql database, user and password
+First edit the db.py file to include your own mysql database, user and password. Currently its set to tasks/tasks12@tasksdb
+
 Then run the below from a shell
 $ python tasks.py
 
@@ -40,6 +41,11 @@ Todo is a list of things I hope to add in the next release and does not really i
 
 
 ** ChangeLog **
+
+29 - 05 - 2009
+
+Have added a configurations page which will now let you configure default statuses. And also see the debug messages.
+
 
 25-03-2011
 

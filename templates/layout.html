@@ -19,7 +19,7 @@
   {% if not session.username %}
   <a href="{{url_for('register') }}"> Register</a>&nbsp;<a href="{{ url_for('login') }}">Login</a>
   {% else %}
-  <a href="{{ url_for('debugs') }}">Debug</a>
+  <a href="{{ url_for('options') }}">Options</a>
   <a href="{{ url_for('logout') }}">Logout</a>
   {% endif %}
 </div>

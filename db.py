@@ -1,9 +1,9 @@
 import MySQLdb as mysql
 import random, re
 
-MYSQLUSER = <MYSQLUSERNAME>
-MYSQLDB = <MYSQLDATABASENAME>
-PASSWORD = <MYSQLUSERPASSWORD>
+MYSQLUSER = 'tasks'
+MYSQLDB = 'tasksdb'
+PASSWORD = 'tasks12'
 
 def connectDB():
 
@@ -148,6 +148,7 @@ def insertBugUpdate(conn, bug):
 
     result = runSql(query, conn)
     
+
 def getUserName(conn, user_id):
 
     query = """select user_name from users where user_id = """+str(user_id)
@@ -168,13 +169,21 @@ def getUsers(conn):
 
 def getStatuses(conn):
 
-    query = """select status, status_description from all_status;"""
+    query = """select status, status_description from all_status order by status;"""
     result = runSql(query,conn)
     all_status = [dict(status = row[0], status_description= row[1]) for row in result]
     
     return all_status
-    
 
+def addStatus(conn, status, description):
+    query = """insert into all_status (status, status_description) values ('"""+status+"""','"""+description+"""');"""
+    result = runSql(query,conn)
+
+def deleteStatus(conn, status):
+    query = """delete from all_status where status = '"""+status+"""';"""
+    runSql(query,conn)
+
+    
 def getAllQueues(conn):
 
     all_users = getUsers(conn)

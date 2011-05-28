@@ -115,33 +115,35 @@ def queue():
                 all_queues = db.getAllQueues(g.db)
                 return render_template('all_queues.html', all_queues = all_queues, users=users, other_username = "All")
     else:
-        render_template('login.html')
+        return render_template('login.html', error = 'Login first')
 
         
 
 @app.route('/addBug', methods=['GET', 'POST'])
 def addBug():
-    if request.method <> 'POST':
-        return render_template('createbug.html')
-    else:
-        debug('Creating the bug dictionary for the username : '+session['username'])
-        user = db.getUser(g.db, session['username'])
-        if user:
-            
-            user_id = user['user_id']
-
-            debug('Building dictionary before creating bug for user_id : '+str(user_id))
-            
-            bug = dict(title = request.form['title'], customer=request.form['customer'], assigned_to_username = request.form['assigned_to_username'], description = request.form['description'], priority = request.form['priority'], status = 'OPEN', user_id = user_id)
-
-            debug('Calling db.createBug2 for bug '+bug['title'])
-            db.createBug2(g.db, bug)
-            debug('Created the above bug')
-            return redirect(url_for('queue'))
+    if 'username' in session:
+        if request.method <> 'POST':
+            return render_template('createbug.html')
         else:
-            return redirect(url_for('queue'))
+            debug('Creating the bug dictionary for the username : '+session['username'])
+            user = db.getUser(g.db, session['username'])
+            if user:
+                
+                user_id = user['user_id']
+                
+                debug('Building dictionary before creating bug for user_id : '+str(user_id))
+                
+                bug = dict(title = request.form['title'], customer=request.form['customer'], assigned_to_username = request.form['assigned_to_username'], description = request.form['description'], priority = request.form['priority'], status = 'OPEN', user_id = user_id)
 
+                debug('Calling db.createBug2 for bug '+bug['title'])
+                db.createBug2(g.db, bug)
+                debug('Created the above bug')
+                return redirect(url_for('queue'))
+            else:
+                return redirect(url_for('queue'))
 
+    else:
+        return render_template('login.html', error = 'Login first')
 
 @app.route('/bug', methods=['GET', 'POST'])
 def bug():
@@ -203,6 +205,38 @@ def bug():
         db.insertBugUpdate(g.db, bugUpdate)
         
         return redirect(url_for('queue'))
+
+
+# setup urls
+
+@app.route('/options')
+def options():
+    return render_template('options.html')
+
+@app.route('/categories')
+def categories():
+    pass
+
+@app.route('/status',methods = ['GET','POST'])
+def status():
+    
+    if request.method <> 'POST':
+        status = db.getStatuses(g.db)
+        return render_template('status.html', status = status)
+    else:
+        debug('Adding the status : ' + request.form['status'])
+        db.addStatus(g.db, request.form['status'], request.form['description'])
+        status = db.getStatuses(g.db)
+        return render_template('status.html', status = status)
+        
+@app.route('/deleteStatus')
+def deleteStatus():
+    status = request.args.get('status', '')
+    description = request.args.get('description', '')
+
+    db.deleteStatus(g.db, status)
+    return redirect(url_for('status'))
+
 
 #Usual debug procedures
         
