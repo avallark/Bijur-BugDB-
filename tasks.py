@@ -79,7 +79,7 @@ def login():
         else:
 
             error = 'Login failed. Try again'
-            render_template('login.html',error = error)
+            return render_template('login.html',error = error)
     else:
         return render_template('login.html')
 
