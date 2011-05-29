@@ -20,8 +20,22 @@ def runSql(query, conn):
 
 #this loginPage call is just a demo of how to use the above to functions.
 
-def loginPage(conn, username,  password):
+def logMeIn(conn, email_id,  password):
     
+    username = re.split('@', email_id)[0]
+    query = """select password from  users where user_name = '"""+username+"""'
+            and password = md5('"""+password+"""');"""
+    result = runSql(query,conn)
+    
+    if len(result) <> 0:
+        return username
+    else:
+        return False
+
+
+def loginPage(conn, email_id,  password):
+    
+    username = re.split('@', email_id)[0]
     query = """select password from  users where user_name = '"""+username+"""'
             and password = md5('"""+password+"""');"""
     result = runSql(query,conn)
@@ -60,7 +74,8 @@ def getBugList(conn, user):
 
 def createUser(conn, email_id, password):
     """ This adds a new user from the email_id """
-    username = email_id.replace('@iese.edu', '')
+    username = re.split('@', email_id)[0]
+    #username = email_id.replace('@iese.edu', '')
     query = """insert into users (email_id, password, user_name, status) values ('"""+email_id+"""',md5('"""+password+"""'), '"""+username+"""','A')"""
     result = runSql(query,conn)
 

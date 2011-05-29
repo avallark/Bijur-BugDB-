@@ -56,23 +56,32 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['email_id'].replace('@iese.edu','')
+        email_id = request.form['email_id']
         password = request.form['password']
-        debug('before trying to login with username '+username)
-        if db.loginPage(g.db, username, password):
-            debug('Login successful for username : '+username)
+        
+        debug('Before trying to login with email_id '+email_id)
+
+        username = db.logMeIn(g.db,email_id,password)
+        
+        if username:
+            debug('Login successful for email_id : '+email_id)
+            
             user = db.getUser(g.db, username)
             
             if user:
                 session['username'] = user['username']
                 debug('user found and session populated with : '+user['username'])
             else:
-                error = "Login failed"
+                error = "User population failed"
                 return redirect(url_for('login', error = error))
                 
             return redirect(url_for('queue'))
-    
-    return render_template('login.html')
+        else:
+
+            error = 'Login failed. Try again'
+            render_template('login.html',error = error)
+    else:
+        return render_template('login.html')
 
 @app.route('/logout')
 def logout():
@@ -85,11 +94,10 @@ def logout():
 @app.route('/register',methods=['GET','POST'])
 def register():
 
-    debug('Registering new User')
-    
     if request.method <> 'POST':
         return render_template('register.html')
     else:
+        debug('Registering new User : '+request.form['email_id'])
         db.createUser(g.db, request.form['email_id'], request.form['password'])
         return redirect(url_for('login'))
 
