@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
  <h3>Register with your Email here</h3> 
+<table>
 <form name=registerform method=POST>
   
-  <p>Email <input type=text name=email_id /></p>
-  <p>Password <input type=password name=password /></p>
-  <input type=submit>
+  <tr><td>Email</td><td> <input type=text name=email_id /></td></tr>
+  <tr><td>Password</td><td> <input type=password name=password /></td></tr>
+  <tr><td>&nbsp;</td><td><input type=submit></td></tr>
 
 </form>
   
+</table>
 {% endblock %}
