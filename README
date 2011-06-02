@@ -42,7 +42,11 @@ Todo is a list of things I hope to add in the next release and does not really i
 
 ** ChangeLog **
 
-29 - 05 - 2009
+02 - 06 - 2011
+
+Added notification everytime a bug is assigned to the user. Notifications cannot be currently disabled. 
+
+29 - 05 - 2011
 
 Have added a configurations page which will now let you configure default statuses. And also see the debug messages.
 
