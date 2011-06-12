@@ -188,6 +188,15 @@ def getUsers(conn):
     
     return users
     
+def getUserEmails(conn):
+
+    query = """select email_id, user_id from users where status = 'A';"""
+    result = runSql(query,conn)
+
+    users = [dict(email_id = row[0], user_id = row[1]) for row in result]
+    
+    return users
+
 
 def getStatuses(conn):
 
@@ -217,3 +226,20 @@ def getAllQueues(conn):
         all_queues.append(summary)
 
     return all_queues
+
+
+
+def getCategories(conn):
+    query = """select c1.category_id, c1.category_name, c1.category_description, c1.parent_category_id, c1.category_owner_id, c2.category_name as parent_Category_name, c2.category_description as parent_category_description, u.user_name, u.email_id from categories c1, categories c2, users u where c1.parent_category_id = c2.category_id and c1.category_owner_id = u.user_id"""
+
+    result = runSql(query,conn)
+    cats = [dict(category_id = row[0], category_name = row[1], category_description = row[2], parent_category_id = row[3], category_owner_id = row[4], parent_category_name = row[5], parent_category_description = row[6], owner_username = row[7], owner_email_id = row[8]) for row in result]
+
+    return cats
+
+
+
+def createCategory(conn, cat):
+    query = """insert into categories (category_name, category_description, category_owner_id, parent_category_id) values (cat['category_name'],cat['category_description'],cat['category_owner_id'],cat['parent_category_id'])"""
+
+    result = runSql(conn, query)

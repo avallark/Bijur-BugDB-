@@ -61,5 +61,16 @@ insert into all_status values ('CLOSED','The bug has been closed');
 insert into all_status values ('SUSPENDED','The bug has been suspended and will be opened later');
 insert into all_status values ('ITWAIT','The bug is waiting for other department in IT');
 
+drop table if exists categories;
+
+create table categories(
+   category_id integer not null auto_increment,
+   category_name char(15) not null,
+   category_description char(50),
+   parent_Category_id integer,
+   category_owner_id integer,
+   primary key (category_id)
+);
+
 
 

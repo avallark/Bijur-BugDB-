@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Bug Status Configuration</h3>
+<p>
+  Please find all bug statuses here. If you want to modify a status, please delete and recreate them.
+</p>
+
+<div class=bugQueue>
+
+ <h4>Currently defined status </h4>
+
+  <table class=bugQueue>
+    <tr>
+      <th> Status </th>
+      <th> Description </th>
+      <th> Delete </td>
+    </tr>
+
+    {% for d in status %}
+
+    <tr>
+      <td> {{ d['status'] }} </td>
+      <td> {{ d['status_description'] }} </td>
+      <td> <a href="deleteStatus?status={{d['status']}}">Delete</a></td>
+    </tr>
+    
+    {% endfor %}
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <form name=addStatus method=POST>
+      <td>
+        Status : <input type=text name=status> 
+      </td>
+      <td>
+        Description : <input type=text name=description size=50> 
+      </td>
+      <td>
+        <input type=submit value="Add Status"> 
+      </td>
+  </table>
+</div>
+
+{% endblock %}
+

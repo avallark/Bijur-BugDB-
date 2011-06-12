@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Bug Categories Configuration</h3>
+<p>
+  Please find all categories here. If you want to modify a category, please delete and recreate them. If you set the category owner in the configurations page for category owners, a new bug created in this particular category-subcategory combination will automatically be assigned to that user.
+</p>
+
+<div class=bugQueue>
+
+  <h4>Categories</h4>
+
+  <table class=bugQueue>
+    <tr>
+      <th> Status </th>
+      <th> Description </th>
+      <th> Delete </td>
+    </tr>
+
+    {% for d in categories  %}
+
+    <tr>
+      <td> {{ d['category'] }} </td>
+      <td> {{ d['category_description'] }} </td>
+      <td> <a href="deleteCategory?category_id={{d['category_id']}}">Delete</a></td>
+    </tr>
+    
+    {% endfor %}
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <form name=addStatus method=POST>
+      <td>
+        Status : <input type=text name=status> 
+      </td>
+      <td>
+        Description : <input type=text name=description size=50> 
+      </td>
+      <td>
+        <input type=submit value="Add Status"> 
+      </td>
+  </table>
+</div>
+
+{% endblock %}
+

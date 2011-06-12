@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Options</h3>
+
+  <table>
+    <tr>
+      <td>
+        <a href="{{url_for('debugs') }}">Debug</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="{{url_for('categories') }}">Categories</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="{{url_for('status') }}">Status</a>
+      </td>
+    </tr>
+  </table> 
+ 
+{% endblock %}

@@ -98,7 +98,9 @@ def register():
         return render_template('register.html')
     else:
         debug('Registering new User : '+request.form['email_id'])
-        db.createUser(g.db, request.form['email_id'], request.form['password'])
+        users_email = db.getUserEmails(g.db)
+        if request.form['email_id'] not in [(row['email_id']) for row in users_email]:
+            db.createUser(g.db, request.form['email_id'], request.form['password'])
         return redirect(url_for('login'))
 
 @app.route('/queue', methods=['GET','POST'])
@@ -226,7 +228,7 @@ def options():
 
 @app.route('/categories')
 def categories():
-    pass
+    return render_template('categories.html')
 
 @app.route('/status',methods = ['GET','POST'])
 def status():
