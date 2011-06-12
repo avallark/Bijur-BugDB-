@@ -1,7 +1,7 @@
 #all imports
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, url_for
-import textile
+#import textile
 
 #import os
 #from werkzeug import secure_filename
