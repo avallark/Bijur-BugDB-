@@ -24,8 +24,7 @@ PROD = "Production"
 ENVIR = DEV
 
 
-# thats it, now lets do our app
-
+# thats it, now lets do 
 
 # create our little application :)
 app = Flask(__name__)
@@ -191,7 +190,7 @@ def bug():
 
         if bugh['assigned_to_user_id'] <> bug['assigned_to_user_id']:
             to = db.getUserEmail(g.db,bug['assigned_to_user_id'])
-            debug('Sending email to notify assignation to : '+to)
+            debug('Sending email to notify assignation to : '+to[0])
             emails.bugAssignNotify(bug, to)
             changedString += "** Changed Assigned from "+ bugh['assigned_to_username'] + " to "+ request.form['assigned_to_username'] + "\n"
 
