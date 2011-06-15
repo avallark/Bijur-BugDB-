@@ -50,6 +50,7 @@ def loginPage(conn, email_id,  password):
 def m_debug(conn, text):
     query = """insert into m_debug (text) values ('"""+text+"""');"""
     result = runSql(query, conn)
+    conn.commit()
 
 def getDebug(conn):
     query = """select text from m_debug;"""
