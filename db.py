@@ -174,7 +174,7 @@ def getUserName(conn, user_id):
 def getUserEmail(conn, user_id):
 
     query = """select email_id from users where user_id = """+str(user_id)
-    result = runSql(query,conn)[0]
+    result = runSql(query,conn)[0][0]
 
     return result
 

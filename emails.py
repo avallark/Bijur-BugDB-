@@ -30,6 +30,6 @@ def bugAssignNotify(bugh, to):
         +"""\nDescription: """+bugh['description'] \
         +"""\n """
 
-    emailUser(subject, body_text, to)
+    emailUser(subject, body_text, [to])
     
     

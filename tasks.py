@@ -190,7 +190,7 @@ def bug():
 
         if bugh['assigned_to_user_id'] <> bug['assigned_to_user_id']:
             to = db.getUserEmail(g.db,bug['assigned_to_user_id'])
-            debug('Sending email to notify assignation to : '+to[0])
+            debug('Sending email to notify assignation to : '+to)
             emails.bugAssignNotify(bug, to)
             changedString += "** Changed Assigned from "+ bugh['assigned_to_username'] + " to "+ request.form['assigned_to_username'] + "\n"
 
