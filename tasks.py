@@ -27,7 +27,6 @@ ENVIR = DEV
 # thats it, now lets do our app
 
 
-
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object(__name__)

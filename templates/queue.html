@@ -42,7 +42,7 @@
 
     <tr>
       <td> {{ d['customer'] }} </td>
-      <td> <a href="/bug?bug_id={{ d['bug_id'] }}"> {{ d['title'] }} </a></td>
+      <td> <a href="{{url_for('bug')}}?bug_id={{ d['bug_id'] }}"> {{ d['title'] }} </a></td>
       <td> {{ d['priority'] }} </td>
       <td> {{ d['status'] }} </td> 
     </tr>
